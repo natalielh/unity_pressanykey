@@ -5,6 +5,7 @@ using UnityEngine;
 public class ExitGame : MonoBehaviour
 {
 
+#if !UNITY_WEBGL
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -15,5 +16,6 @@ public class ExitGame : MonoBehaviour
         }
     }
 
+#endif
 
 }
