@@ -47,6 +47,8 @@ public class gameController2 : MonoBehaviour {
 	[SerializeField]
 	private Stat meter6;
 
+	private List<Stat> meters = new List<Stat>();
+
 	public Text waveText1;
 	public Text waveText2;
 	public Text waveText3;
@@ -60,6 +62,13 @@ public class gameController2 : MonoBehaviour {
 
 	void Awake () {
 		//needed to "get" values from Stat when game begins
+		meters.Add(meter1);
+		meters.Add(meter2);
+		meters.Add(meter3);
+		meters.Add(meter4);
+		meters.Add(meter5);
+		meters.Add(meter6);
+
 		meter1.Initialize ();
 		meter2.Initialize ();
 		meter3.Initialize ();
@@ -79,6 +88,12 @@ public class gameController2 : MonoBehaviour {
 
 		//
 		waveCountText.text = "Current Meter: " + meterSelect.ToString("0");
+
+		foreach (Stat meter in meters)
+		{
+			meter.meterGameObject.SetActive(false);
+		}
+		meters[meterSelect - 1].meterGameObject.SetActive(true);
 
 	}
 
@@ -115,18 +130,34 @@ public class gameController2 : MonoBehaviour {
 			if (meterSelect == 6) meter6.CurrentVal += 1;
 		}
 
-		//swith between meters
+		//switch between meters
 		if (Input.GetKeyDown (KeyCode.UpArrow)) {
 			if (meterSelect < meterMax) {
-				meterGroup.transform.Translate(Vector3.down * ((meterSelect - meterSelect) + 78)); //predetermined distance to transform
+				foreach (Stat meter in meters)
+				{
+					meter.meterGameObject.SetActive(false);
+				}
+				
+
+				//meterGroup.transform.Translate(Vector3.down * ((meterSelect - meterSelect) + 78)); //predetermined distance to transform
 				meterSelect += 1;
+
+				meters[meterSelect - 1].meterGameObject.SetActive(true);
 			}
 		}
 
 		if (Input.GetKeyDown (KeyCode.DownArrow)) {
 			if (meterSelect > meterMin) {
-				meterGroup.transform.Translate (Vector3.down * ((meterSelect - meterSelect) - 78));
+				foreach (Stat meter in meters)
+				{
+					meter.meterGameObject.SetActive(false);
+				}
+				
+
+				//meterGroup.transform.Translate (Vector3.down * ((meterSelect - meterSelect) - 78));
 				meterSelect -= 1;
+
+				meters[meterSelect - 1].meterGameObject.SetActive(true);
 			}
 		}
 		waveCountText.text = meterSelect.ToString("0");
@@ -160,4 +191,5 @@ public class gameController2 : MonoBehaviour {
 		}
 			
 	}
+
 }

@@ -6,6 +6,8 @@ using System;
 [Serializable]
 public class Stat {
 	
+	public GameObject meterGameObject;
+
 	[SerializeField]
 	private BarScript bar;
 
